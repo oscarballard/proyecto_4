@@ -10,6 +10,9 @@
  */
 //import class
 import conn.*;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class lg extends javax.swing.JFrame {
 
@@ -37,7 +40,7 @@ public class lg extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         user = new javax.swing.JTextField();
-        pass = new javax.swing.JTextField();
+        pass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,8 +96,11 @@ public class lg extends javax.swing.JFrame {
         });
 
         user.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        pass.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        user.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -110,8 +116,8 @@ public class lg extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pass, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                            .addComponent(user)))
+                            .addComponent(user, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                            .addComponent(pass)))
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(49, 49, 49)
@@ -163,12 +169,25 @@ public class lg extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
+        String contrase = "";
         login lg = login.getInstancia();
         String usuario  = (user.getText());
-        String contra   = (pass.getText());
-        lg.set_lg(usuario,contra);
-        lg.lg();
+        char[] contra   = pass.getPassword();
+        
+        for(int i = 0; i < contra.length; i++){
+            contrase += contra[i];
+        }
+        lg.set_lg(usuario,contrase);
+        try {
+            lg.lg();
+        } catch (SQLException ex) {
+            Logger.getLogger(lg.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,7 +232,7 @@ public class lg extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private java.awt.Panel panel1;
     private java.awt.Panel panel2;
-    private javax.swing.JTextField pass;
+    private javax.swing.JPasswordField pass;
     private javax.swing.JTextField user;
     // End of variables declaration//GEN-END:variables
 }

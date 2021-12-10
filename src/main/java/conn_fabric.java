@@ -12,12 +12,12 @@ import conn.IConn;
 import conn.mysql_connect;
 public class conn_fabric {
     
-    public IConn get_conn(String motor){
+    public static IConn get_conn(String motor){
         
         if(motor == null){
             return new Conn_vacia();
         }else if(motor.equalsIgnoreCase("mysql")){
-            return new mysql_connect() {};
+            return new mysql_connect("db4free.net","estuditlafinal","itla123.","almacenitlafinal") {};
         }
         return new Conn_vacia();
     }
